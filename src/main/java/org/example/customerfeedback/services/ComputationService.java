@@ -1,4 +1,4 @@
-package org.example.feedback.services;
+package org.example.customerfeedback.services;
 
 public class ComputationService {
 

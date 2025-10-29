@@ -1,7 +1,7 @@
-package org.example.feedback.services;
+package org.example.customerfeedback.services;
 
-import org.example.feedback.Client;
-import org.example.feedback.Feedback;
+import org.example.customerfeedback.domain.Client;
+import org.example.customerfeedback.domain.Feedback;
 
 public class ValidationService {
 

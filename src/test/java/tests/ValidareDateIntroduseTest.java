@@ -1,12 +1,12 @@
-package org.example.feedback.tests;
+package tests;
 
-import org.example.feedback.Client;
-import org.example.feedback.Feedback;
-import org.example.feedback.services.ValidationService;
+import org.example.customerfeedback.domain.Client;
+import org.example.customerfeedback.domain.Feedback;
+import org.example.customerfeedback.services.ValidationService;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ValidationServiceTest {
+public class ValidareDateIntroduseTest {
 
     @Test
     void testClientValid() {

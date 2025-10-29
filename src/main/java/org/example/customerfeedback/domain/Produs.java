@@ -1,4 +1,4 @@
-package org.example.feedback;
+package org.example.customerfeedback.domain;
 
 import java.time.LocalDate;
 

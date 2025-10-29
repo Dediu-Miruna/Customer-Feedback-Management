@@ -1,8 +1,8 @@
-package org.example.feedback.services;
+package org.example.customerfeedback.services;
 
-import org.example.feedback.Agent;
-import org.example.feedback.Ticket;
-import org.example.feedback.enums.TicketStatus;
+import org.example.customerfeedback.domain.Agent;
+import org.example.customerfeedback.domain.Ticket;
+import org.example.customerfeedback.enums.TicketStatus;
 
 public class WorkflowService {
 

@@ -1,4 +1,4 @@
-package org.example.feedback;
+package org.example.customerfeedback.domain;
 
 public class RegulaTicket {
 

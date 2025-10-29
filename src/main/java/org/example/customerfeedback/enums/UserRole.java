@@ -1,4 +1,4 @@
-package org.example.feedback.enums;
+package org.example.customerfeedback.enums;
 
 public enum UserRole {
     ADMIN,

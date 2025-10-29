@@ -1,13 +1,13 @@
-package org.example.feedback.tests;
+package tests;
 
-import org.example.feedback.Agent;
-import org.example.feedback.Ticket;
-import org.example.feedback.enums.TicketStatus;
-import org.example.feedback.services.WorkflowService;
+import org.example.customerfeedback.domain.Agent;
+import org.example.customerfeedback.domain.Ticket;
+import org.example.customerfeedback.enums.TicketStatus;
+import org.example.customerfeedback.services.WorkflowService;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class WorkflowServiceTest {
+public class VerificareFluxTicheteTest {
 
     @Test
     void testAtribuireTicket() {

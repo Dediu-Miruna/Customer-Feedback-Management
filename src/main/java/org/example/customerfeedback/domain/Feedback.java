@@ -1,7 +1,8 @@
-package org.example.feedback;
+package org.example.customerfeedback.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+
 import java.time.LocalDateTime;
 
 @Entity

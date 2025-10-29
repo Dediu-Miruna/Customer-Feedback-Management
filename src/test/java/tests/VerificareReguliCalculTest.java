@@ -1,10 +1,10 @@
-package org.example.feedback.tests;
+package tests;
 
-import org.example.feedback.services.ComputationService;
+import org.example.customerfeedback.services.ComputationService;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ComputationServiceTest {
+public class VerificareReguliCalculTest {
 
     @Test
     void testCalculeazaNPS() {
