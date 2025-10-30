@@ -18,7 +18,7 @@ public class Agent {
     @OneToMany(mappedBy = "atribuitLui")
     private List<Ticket> tichete;
 
-    // Getteri și setteri
+    // Getteri și setteri 
     public Long getAgentId() { return agentId; }
     public void setAgentId(Long agentId) { this.agentId = agentId; }
 
