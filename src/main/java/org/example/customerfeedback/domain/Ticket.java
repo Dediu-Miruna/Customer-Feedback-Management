@@ -1,8 +1,12 @@
 package org.example.customerfeedback.domain;
 
 import jakarta.persistence.*;
+import org.example.customerfeedback.enums.Prioritate;
+import org.example.customerfeedback.enums.TicketStatus;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Ticket {
@@ -11,28 +15,75 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ticketId;
 
-    private String status;
-    private String prioritate;
+    @Enumerated(EnumType.STRING)
+    private TicketStatus status;
 
-    @ManyToOne
+    @Enumerated(EnumType.STRING)
+    private Prioritate prioritate;
+
+    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime updatedAt;
+
+    // ---------------- RELAȚII --------------------
+
+    // Relatie cu Agent
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "agent_id")
     private Agent atribuitLui;
 
-    @OneToOne
+    // Relatie cu Feedback
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "feedback_id")
     private Feedback feedback;
 
-    private LocalDateTime creatLa = LocalDateTime.now();
+    // Comentarii
+    @OneToMany(
+            mappedBy = "ticket",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Comentariu> comentarii = new ArrayList<>();
 
-    // Getteri și setteri
+    // Istoric statusuri
+    @OneToMany(
+            mappedBy = "ticket",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<StatusIstoric> istorice = new ArrayList<>();
+
+    // ---------------- CONSTRUCTORI --------------------
+
+    public Ticket() {}
+
+    public Ticket(TicketStatus status, Prioritate prioritate) {
+        this.status = status;
+        this.prioritate = prioritate;
+    }
+
+    // ✔ Constructorul necesar pentru TicketService
+    public Ticket(TicketStatus status, Prioritate prioritate, Feedback feedback) {
+        this.status = status;
+        this.prioritate = prioritate;
+        this.feedback = feedback;
+        this.createdAt = LocalDateTime.now();
+    }
+
+    // ---------------- GETTERE + SETTERE ----------------
+
     public Long getTicketId() { return ticketId; }
-    public void setTicketId(Long ticketId) { this.ticketId = ticketId; }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public TicketStatus getStatus() { return status; }
+    public void setStatus(TicketStatus status) { this.status = status; }
 
-    public String getPrioritate() { return prioritate; }
-    public void setPrioritate(String prioritate) { this.prioritate = prioritate; }
+    public Prioritate getPrioritate() { return prioritate; }
+    public void setPrioritate(Prioritate prioritate) { this.prioritate = prioritate; }
+
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
 
     public Agent getAtribuitLui() { return atribuitLui; }
     public void setAtribuitLui(Agent atribuitLui) { this.atribuitLui = atribuitLui; }
@@ -40,6 +91,31 @@ public class Ticket {
     public Feedback getFeedback() { return feedback; }
     public void setFeedback(Feedback feedback) { this.feedback = feedback; }
 
-    public LocalDateTime getCreatLa() { return creatLa; }
-    public void setCreatLa(LocalDateTime creatLa) { this.creatLa = creatLa; }
+    public List<Comentariu> getComentarii() { return comentarii; }
+    public void setComentarii(List<Comentariu> comentarii) { this.comentarii = comentarii; }
+
+    public List<StatusIstoric> getIstorice() { return istorice; }
+    public void setIstorice(List<StatusIstoric> istorice) { this.istorice = istorice; }
+
+    // ---------------- HELPER METHODS ----------------
+
+    public void adaugaComentariu(Comentariu c) {
+        comentarii.add(c);
+        c.setTicket(this);
+    }
+
+    public void stergeComentariu(Comentariu c) {
+        comentarii.remove(c);
+        c.setTicket(null);
+    }
+
+    public void adaugaStatus(StatusIstoric s) {
+        istorice.add(s);
+        s.setTicket(this);
+    }
+
+    public void stergeStatus(StatusIstoric s) {
+        istorice.remove(s);
+        s.setTicket(null);
+    }
 }

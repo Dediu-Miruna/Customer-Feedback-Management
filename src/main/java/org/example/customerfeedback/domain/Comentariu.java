@@ -1,32 +1,45 @@
+
 package org.example.customerfeedback.domain;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
 public class Comentariu {
 
-    private Long commentId;
-    private Long ticketId;
-    private String autor;  // poate fi client sau agent
-    private String mesaj;
-    private boolean intern;
-    private LocalDateTime creatLa = LocalDateTime.now();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long comentariuId;
 
-    // Getteri și setteri
-    public Long getCommentId() { return commentId; }
-    public void setCommentId(Long commentId) { this.commentId = commentId; }
+    private String autor;         // Autorul comentariului (agent sau client)
+    private String text;          // Conținutul comentariului
+    private LocalDateTime createdAt = LocalDateTime.now();
 
-    public Long getTicketId() { return ticketId; }
-    public void setTicketId(Long ticketId) { this.ticketId = ticketId; }
+    // Relatia cu Ticket
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ticket_id")
+    private Ticket ticket;
+
+    // Constructori
+    public Comentariu() {}
+
+    public Comentariu(String autor, String text) {
+        this.autor = autor;
+        this.text = text;
+    }
+
+    // GETTERE ȘI SETTERE
+
+    public Long getComentariuId() { return comentariuId; }
 
     public String getAutor() { return autor; }
     public void setAutor(String autor) { this.autor = autor; }
 
-    public String getMesaj() { return mesaj; }
-    public void setMesaj(String mesaj) { this.mesaj = mesaj; }
+    public String getText() { return text; }
+    public void setText(String text) { this.text = text; }
 
-    public boolean isIntern() { return intern; }
-    public void setIntern(boolean intern) { this.intern = intern; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
 
-    public LocalDateTime getCreatLa() { return creatLa; }
-    public void setCreatLa(LocalDateTime creatLa) { this.creatLa = creatLa; }
+    public Ticket getTicket() { return ticket; }
+    public void setTicket(Ticket ticket) { this.ticket = ticket; }
 }

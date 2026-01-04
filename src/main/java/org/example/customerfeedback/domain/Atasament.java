@@ -1,36 +1,51 @@
 package org.example.customerfeedback.domain;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
 public class Atasament {
 
-    private Long attachmentId;
-    private String numeFisier;
-    private long dimensiune;
-    private String tip;
-    private String url;
-    private String incarcatDe;
-    private LocalDateTime incarcatLa = LocalDateTime.now();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long atasamentId;
 
-    // Getteri și setteri
-    public Long getAttachmentId() { return attachmentId; }
-    public void setAttachmentId(Long attachmentId) { this.attachmentId = attachmentId; }
+    private String numeFisier;
+    private String tipMime;
+    private Long dimensiune;      // în bytes
+
+    private LocalDateTime uploadedAt = LocalDateTime.now();
+
+    // RELATIE CU FEEDBACK
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "feedback_id")
+    private Feedback feedback;
+
+    // Constructori
+    public Atasament() {}
+
+    public Atasament(String numeFisier, String tipMime, Long dimensiune) {
+        this.numeFisier = numeFisier;
+        this.tipMime = tipMime;
+        this.dimensiune = dimensiune;
+    }
+
+    // GETTERE & SETTERE
+
+    public Long getAtasamentId() { return atasamentId; }
 
     public String getNumeFisier() { return numeFisier; }
     public void setNumeFisier(String numeFisier) { this.numeFisier = numeFisier; }
 
-    public long getDimensiune() { return dimensiune; }
-    public void setDimensiune(long dimensiune) { this.dimensiune = dimensiune; }
+    public String getTipMime() { return tipMime; }
+    public void setTipMime(String tipMime) { this.tipMime = tipMime; }
 
-    public String getTip() { return tip; }
-    public void setTip(String tip) { this.tip = tip; }
+    public Long getDimensiune() { return dimensiune; }
+    public void setDimensiune(Long dimensiune) { this.dimensiune = dimensiune; }
 
-    public String getUrl() { return url; }
-    public void setUrl(String url) { this.url = url; }
+    public LocalDateTime getUploadedAt() { return uploadedAt; }
 
-    public String getIncarcatDe() { return incarcatDe; }
-    public void setIncarcatDe(String incarcatDe) { this.incarcatDe = incarcatDe; }
-
-    public LocalDateTime getIncarcatLa() { return incarcatLa; }
-    public void setIncarcatLa(LocalDateTime incarcatLa) { this.incarcatLa = incarcatLa; }
+    public Feedback getFeedback() { return feedback; }
+    public void setFeedback(Feedback feedback) { this.feedback = feedback; }
 }
+

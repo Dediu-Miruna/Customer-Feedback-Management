@@ -1,43 +1,37 @@
-package org.example.customerfeedback.domain;
+package org.example.customerfeedback.dto;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.example.customerfeedback.enums.TicketStatus;
 
 import java.time.LocalDateTime;
 
-@Entity
-public class StatusIstoric {
+public class StatusIstoricDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("id")
     private Long istoricId;
 
-    @Enumerated(EnumType.STRING)
     private TicketStatus vechiulStatus;
-
-    @Enumerated(EnumType.STRING)
     private TicketStatus noulStatus;
 
-    private String modificatDe; // numele agentului / sistemului
-    private LocalDateTime modificatLa = LocalDateTime.now();
+    private String modificatDe;
+    private LocalDateTime modificatLa;
 
-    // Relatia cu Ticket
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ticket_id")
-    private Ticket ticket;
+    public StatusIstoricDTO() {}
 
-    // Constructori
-    public StatusIstoric() {}
+    public StatusIstoricDTO(Long id, TicketStatus vechiulStatus, TicketStatus noulStatus,
+                            String modificatDe, LocalDateTime modificatLa) {
 
-    public StatusIstoric(TicketStatus vechiulStatus, TicketStatus noulStatus, String modificatDe) {
+        this.istoricId = id;
         this.vechiulStatus = vechiulStatus;
         this.noulStatus = noulStatus;
         this.modificatDe = modificatDe;
+        this.modificatLa = modificatLa;
     }
 
-    // GETTERE & SETTERE
+    // ---------- GETTERE & SETTERE ----------
 
     public Long getIstoricId() { return istoricId; }
+    public void setIstoricId(Long istoricId) { this.istoricId = istoricId; }
 
     public TicketStatus getVechiulStatus() { return vechiulStatus; }
     public void setVechiulStatus(TicketStatus vechiulStatus) { this.vechiulStatus = vechiulStatus; }
@@ -49,9 +43,5 @@ public class StatusIstoric {
     public void setModificatDe(String modificatDe) { this.modificatDe = modificatDe; }
 
     public LocalDateTime getModificatLa() { return modificatLa; }
-
-    public Ticket getTicket() { return ticket; }
-    public void setTicket(Ticket ticket) { this.ticket = ticket; }
+    public void setModificatLa(LocalDateTime modificatLa) { this.modificatLa = modificatLa; }
 }
-
-

@@ -1,27 +1,50 @@
 package org.example.customerfeedback.domain;
 
+import jakarta.persistence.*;
+import org.example.customerfeedback.enums.Prioritate;
+
+@Entity
 public class SLA {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long slaId;
-    private String nume;
-    private int timpRaspunsOre;
-    private int timpRezolvareOre;
-    private String politicaEscaladare;
 
-    // Getteri și setteri
+    private String nume;
+
+    private Integer timpRaspunsOre;       // ex: 24h
+    private Integer timpRezolvareOre;     // ex: 72h
+
+    @Enumerated(EnumType.STRING)
+    private Prioritate prioritateAplicabila;
+
+    // Constructori
+    public SLA() {}
+
+    public SLA(String nume, Integer timpRaspunsOre, Integer timpRezolvareOre, Prioritate prioritateAplicabila) {
+        this.nume = nume;
+        this.timpRaspunsOre = timpRaspunsOre;
+        this.timpRezolvareOre = timpRezolvareOre;
+        this.prioritateAplicabila = prioritateAplicabila;
+    }
+
+    // GETTERE & SETTERE
+
     public Long getSlaId() { return slaId; }
-    public void setSlaId(Long slaId) { this.slaId = slaId; }
 
     public String getNume() { return nume; }
     public void setNume(String nume) { this.nume = nume; }
 
-    public int getTimpRaspunsOre() { return timpRaspunsOre; }
-    public void setTimpRaspunsOre(int timpRaspunsOre) { this.timpRaspunsOre = timpRaspunsOre; }
+    public Integer getTimpRaspunsOre() { return timpRaspunsOre; }
+    public void setTimpRaspunsOre(Integer timpRaspunsOre) { this.timpRaspunsOre = timpRaspunsOre; }
 
-    public int getTimpRezolvareOre() { return timpRezolvareOre; }
-    public void setTimpRezolvareOre(int timpRezolvareOre) { this.timpRezolvareOre = timpRezolvareOre; }
+    public Integer getTimpRezolvareOre() { return timpRezolvareOre; }
+    public void setTimpRezolvareOre(Integer timpRezolvareOre) { this.timpRezolvareOre = timpRezolvareOre; }
 
-    public String getPoliticaEscaladare() { return politicaEscaladare; }
-    public void setPoliticaEscaladare(String politicaEscaladare) { this.politicaEscaladare = politicaEscaladare; }
+    public Prioritate getPrioritateAplicabila() { return prioritateAplicabila; }
+    public void setPrioritateAplicabila(Prioritate prioritateAplicabila) {
+        this.prioritateAplicabila = prioritateAplicabila;
+    }
 }
+
 

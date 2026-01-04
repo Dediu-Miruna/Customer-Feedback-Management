@@ -1,34 +1,44 @@
 package org.example.customerfeedback.domain;
 
-import java.util.List;
+import jakarta.persistence.*;
+import org.example.customerfeedback.enums.Prioritate;
 
+@Entity
 public class Categorie {
 
-    private Long categoryId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long categorieId;
+
     private String nume;
-    private Long parentCategoryId;
-    private String prioritateImplicita;
-    private Long slaTemplateId;
+    private String descriere;
 
-    private List<Feedback> feedbackuri;
+    // Prioritate implicită (ENUM)
+    @Enumerated(EnumType.STRING)
+    private Prioritate prioritateImplicita;
 
-    // Getteri și setteri
-    public Long getCategoryId() { return categoryId; }
-    public void setCategoryId(Long categoryId) { this.categoryId = categoryId; }
+    // Constructori
+    public Categorie() {}
+
+    public Categorie(String nume, Prioritate prioritateImplicita) {
+        this.nume = nume;
+        this.prioritateImplicita = prioritateImplicita;
+    }
+
+    // GETTERE & SETTERE
+
+    public Long getCategorieId() { return categorieId; }
 
     public String getNume() { return nume; }
     public void setNume(String nume) { this.nume = nume; }
 
-    public Long getParentCategoryId() { return parentCategoryId; }
-    public void setParentCategoryId(Long parentCategoryId) { this.parentCategoryId = parentCategoryId; }
+    public String getDescriere() { return descriere; }
+    public void setDescriere(String descriere) { this.descriere = descriere; }
 
-    public String getPrioritateImplicita() { return prioritateImplicita; }
-    public void setPrioritateImplicita(String prioritateImplicita) { this.prioritateImplicita = prioritateImplicita; }
-
-    public Long getSlaTemplateId() { return slaTemplateId; }
-    public void setSlaTemplateId(Long slaTemplateId) { this.slaTemplateId = slaTemplateId; }
-
-    public List<Feedback> getFeedbackuri() { return feedbackuri; }
-    public void setFeedbackuri(List<Feedback> feedbackuri) { this.feedbackuri = feedbackuri; }
+    public Prioritate getPrioritateImplicita() { return prioritateImplicita; }
+    public void setPrioritateImplicita(Prioritate prioritateImplicita) {
+        this.prioritateImplicita = prioritateImplicita;
+    }
 }
+
 

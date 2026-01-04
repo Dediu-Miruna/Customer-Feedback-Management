@@ -1,7 +1,7 @@
 package org.example.customerfeedback.domain;
 
 import jakarta.persistence.*;
-
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,10 +15,22 @@ public class Agent {
     private String email;
     private boolean activ;
 
-    @OneToMany(mappedBy = "atribuitLui")
-    private List<Ticket> tichete;
+    @OneToMany(
+            mappedBy = "atribuitLui",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    private List<Ticket> tichete = new ArrayList<>();
 
-    // Getteri și setteri 
+    public Agent() {}
+
+    public Agent(String nume, String email, boolean activ) {
+        this.nume = nume;
+        this.email = email;
+        this.activ = activ;
+    }
+
     public Long getAgentId() { return agentId; }
     public void setAgentId(Long agentId) { this.agentId = agentId; }
 
@@ -33,4 +45,15 @@ public class Agent {
 
     public List<Ticket> getTichete() { return tichete; }
     public void setTichete(List<Ticket> tichete) { this.tichete = tichete; }
+
+    public void adaugaTicket(Ticket t) {
+        tichete.add(t);
+        t.setAtribuitLui(this);
+    }
+
+    public void stergeTicket(Ticket t) {
+        tichete.remove(t);
+        t.setAtribuitLui(null);
+    }
 }
+

@@ -1,9 +1,8 @@
 package org.example.customerfeedback.domain;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,21 +12,31 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long clientId;
 
-    @NotBlank
     private String nume;
-
-    @Email
     private String email;
-
     private String telefon;
+
     private boolean anonim;
+    private String locale;
 
-    @OneToMany(mappedBy = "trimisDe", cascade = CascadeType.ALL)
-    private List<Feedback> feedbackuri;
+    @OneToMany(
+            mappedBy = "client",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Feedback> feedbackList = new ArrayList<>();
 
-    // Getteri și setteri
+    public Client() {}
+
+    public Client(String nume, String email, boolean anonim) {
+        this.nume = nume;
+        this.email = email;
+        this.anonim = anonim;
+    }
+
+    // GETTERE & SETTERE ---------------------------------------------------
+
     public Long getClientId() { return clientId; }
-    public void setClientId(Long clientId) { this.clientId = clientId; }
 
     public String getNume() { return nume; }
     public void setNume(String nume) { this.nume = nume; }
@@ -41,7 +50,22 @@ public class Client {
     public boolean isAnonim() { return anonim; }
     public void setAnonim(boolean anonim) { this.anonim = anonim; }
 
-    public List<Feedback> getFeedbackuri() { return feedbackuri; }
-    public void setFeedbackuri(List<Feedback> feedbackuri) { this.feedbackuri = feedbackuri; }
+    public String getLocale() { return locale; }
+    public void setLocale(String locale) { this.locale = locale; }
+
+    public List<Feedback> getFeedbackList() { return feedbackList; }
+    public void setFeedbackList(List<Feedback> feedbackList) { this.feedbackList = feedbackList; }
+
+    // HELPER METHODS -------------------------------------------------------
+
+    public void addFeedback(Feedback f) {
+        feedbackList.add(f);
+        f.setClient(this);
+    }
+
+    public void removeFeedback(Feedback f) {
+        feedbackList.remove(f);
+        f.setClient(null);
+    }
 }
 
